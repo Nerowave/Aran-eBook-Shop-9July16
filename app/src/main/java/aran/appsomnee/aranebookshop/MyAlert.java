@@ -27,5 +27,5 @@ public class MyAlert {
     }
 
 } //Main Class
-    //Class obejext = new class();
+    //Class object = new class();
 

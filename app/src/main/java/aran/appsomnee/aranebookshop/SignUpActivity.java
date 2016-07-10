@@ -19,9 +19,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     //Explicit นี่คือการประกาศตัวแปร
     private EditText nameEditText, surnameEditText, userEditText,
-            passwordEditText;
-    private String nameString, surnameString,
-            userString, passwordString;
+            passwordEditText, addressEditText,
+            telEditText, accountbankEditText,
+            emailEditText;
+    private String nameString, surnameString, userString,
+            passwordString, addressString,
+            telString, accountbankString,
+            emailString;
     private static final String urlPHP = "http://swiftcodingthai.com/9july/add_user_aran.php";
 
 
@@ -36,6 +40,10 @@ public class SignUpActivity extends AppCompatActivity {
         surnameEditText = (EditText) findViewById(R.id.editText2);
         userEditText = (EditText) findViewById(R.id.editText3);
         passwordEditText = (EditText) findViewById(R.id.editText4);
+        addressEditText = (EditText) findViewById(R.id.editText7);
+        telEditText = (EditText) findViewById(R.id.editText8);
+        accountbankEditText = (EditText) findViewById(R.id.editText9);
+        emailEditText = (EditText) findViewById(R.id.editText10);
 
     } // Main Method
 
@@ -47,6 +55,10 @@ public class SignUpActivity extends AppCompatActivity {
         surnameString = surnameEditText.getText().toString().trim();
         userString = userEditText.getText().toString().trim();
         passwordString = passwordEditText.getText().toString().trim();
+        addressString = addressEditText.getText().toString().trim();
+        telString = telEditText.getText().toString().trim();
+        accountbankString = accountbankEditText.getText().toString().trim();
+        emailString = emailEditText.getText().toString().trim();
 
         //Check Space
         if (checkSpace()) {
@@ -73,6 +85,10 @@ public class SignUpActivity extends AppCompatActivity {
                 .add("Surname", surnameString)
                 .add("User", userString)
                 .add("Password", passwordString)
+                .add("Address", addressString)
+                .add("Tel", telString)
+                .add("Accountbank", accountbankString)
+                .add("Email", emailString)
                 .build();
         Request.Builder builder = new Request.Builder();
         Request request = builder.url(urlPHP).post(requestBody).build();
@@ -95,7 +111,9 @@ public class SignUpActivity extends AppCompatActivity {
         boolean status = false;
 
         status = nameString.equals("") || surnameString.equals("") ||
-                userString.equals("") || passwordString.equals("");
+                userString.equals("") || passwordString.equals("") ||
+                addressString.equals("") || telString.equals("") ||
+                accountbankString.equals("") || emailString.equals("");
 
         return status;
     }
