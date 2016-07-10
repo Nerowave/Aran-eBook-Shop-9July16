@@ -1,10 +1,13 @@
 package aran.appsomnee.aranebookshop;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -98,10 +101,27 @@ public class ServiceActivity extends AppCompatActivity {
                     bookStrings[i] = jsonObject.getString("Name");
                     priceStrings[i] = jsonObject.getString("Price");
                     iconStrings[i] = jsonObject.getString("Cover");
+
                 } //for
 
                 MyAdapter myAdapter = new MyAdapter(bookStrings, context, iconStrings, priceStrings);
                 myListView.setAdapter(myAdapter);
+
+                myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        Intent intent = new Intent(ServiceActivity.this, DetailActivity.class);
+                        intent.putExtra("NameLogin", nameString);
+                        intent.putExtra("SurnameLogin", surnameString);
+                        intent.putExtra("Book", bookStrings[i]);
+                        intent.putExtra("Price", priceStrings[i]);
+                        intent.putExtra("Icon", iconStrings[i]);
+                        startActivity(intent);
+
+
+                    } // onItemClick
+                });
 
             } catch (Exception e) {
                 Log.d("ShopV2", "e onPost ==> " + e.toString());
