@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -38,10 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
         //Explicit
         private Context context;
-        private String myURL, myUserString, myPasswordString;
+        private String myURL, myUserString, myPasswordString,
+                truePasswordString, loginNameString, loginSurnameString;
         private boolean statusABoolean = true;
 
-        public SynUserTABLE(Context context, String myPasswordString, String myURL, String myUserString) {
+        public SynUserTABLE(Context context,
+                            String myPasswordString,
+                            String myURL,
+                            String myUserString) {
             this.context = context;
             this.myPasswordString = myPasswordString;
             this.myURL = myURL;
@@ -73,19 +78,31 @@ public class MainActivity extends AppCompatActivity {
             try {
 
                 JSONArray jsonArray = new JSONArray(s);
-                for (int i=0;1<jsonArray.length();i +=1) {
+                for (int i=0;i<jsonArray.length();i +=1) {
 
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     if (myUserString.equals(jsonObject.getString("User"))) {
+
                         statusABoolean = false;
-                    } else if (statusABoolean) {
-                        MyAlert myAlert = new MyAlert();
-                        myAlert.myDialog(context, "ไม่มี User นี้","ไม่มี" + myUserString + "ในฐานข้อมูลเรา");
-                    } else {
+                        truePasswordString = jsonObject.getString("Password");
+                        loginNameString = jsonObject.getString("Name");
+                        loginSurnameString = jsonObject.getString("Surname");
 
                     }
-
                 }  //for
+
+                if (statusABoolean) {
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(context, "ไม่มี User นี้",
+                            "ไม่มี" + myUserString + "ในฐานข้อมูลเรา");
+                } else if (myPasswordString.equals(truePasswordString)) {
+
+                    Toast.makeText(context, "Welcome " + loginNameString + " " + loginSurnameString, Toast.LENGTH_SHORT).show();
+                } else {
+                    MyAlert myAlert = new MyAlert();
+                    myAlert.myDialog(context, "Password False",
+                            "Please Try Again Password False");
+                }
 
 
             } catch (Exception e) {
